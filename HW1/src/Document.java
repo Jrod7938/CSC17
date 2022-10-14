@@ -147,7 +147,7 @@ public abstract class Document {
 
 			fleschScore = 206.835 - 1.015 * wordBySentence - 84.6 * syllByWords;
 		} catch(Exception e){
-			System.out.println("Arithmetic error, cannot devide by 0." + e);
+			System.out.println("Arithmetic error, cannot divide by 0." + e);
 		}
 			
 	    return fleschScore;
