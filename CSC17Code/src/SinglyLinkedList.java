@@ -7,9 +7,6 @@ public class SinglyLinkedList {
 	private static class ListNode {
 		int val;
 		ListNode next;
-		ListNode(int x) { 
-			val = x;
-		}
 		ListNode(int x, ListNode nextIn) { 
 			this.val = x;
 			this.next = nextIn;
@@ -94,7 +91,6 @@ public class SinglyLinkedList {
                 current = current.next;
                 count = count + 1;
             }
-            ListNode reverseEnd = current;
             ListNode reverseNext = current.next;
             current.next = null;
             ListNode reversePart = reverse(reverseStart);
