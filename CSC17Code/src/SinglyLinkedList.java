@@ -60,7 +60,7 @@ public class SinglyLinkedList {
         }
         return count;
     }
-
+    /* 
     private ListNode reverse(ListNode head) {
         if(head==null || head.next == null){
             return head;
@@ -70,6 +70,7 @@ public class SinglyLinkedList {
         head.next = null;
         return restPart;
     }
+    
     
     private void reverseBetween(int m, int n) throws Exception{
         int listLength = this.getCount();
@@ -103,6 +104,32 @@ public class SinglyLinkedList {
                 }
             }
         }
+    }*/
+    
+    private void reverseBetween(int m, int n){
+        ListNode dummy = new ListNode(0, head);
+        ListNode current = dummy;
+
+        for(int i=0; i<m-1; i++){
+            current = current.next;
+        }
+        ListNode before = current;
+        for(int i=0; i<n-m+2; i++){
+            current = current.next;
+        }
+        ListNode after = current;
+        current = before.next;
+        ListNode previous = after;
+        ListNode next;
+        while(current!=after){
+            next = current.next;
+            current.next = previous;
+            previous = current;
+            current = next;
+        }
+        before.next = previous;
+        head = dummy.next;
+
     }
     
     public static void main(String args[]) throws Exception {
