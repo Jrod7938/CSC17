@@ -1,5 +1,3 @@
-import java.util.HashMap;
-
 public class SinglyLinkedList2{
 	
 	// reference that points to the list head
