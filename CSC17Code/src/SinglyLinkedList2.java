@@ -82,19 +82,24 @@ public class SinglyLinkedList2{
     }
     
     public void deleteDuplicates2() {
-		// TODO: Still need to correctly implement meathod
-		// place your code here
-        ListNode temp = head;
-        ListNode deletedList = new ListNode(0);
-        while(temp != null){
-            if(temp.val != temp.next.val){
-                deletedList.next = temp;
-            }else {
-                continue;
+		if(head == null) return;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode pre = dummy;
+        ListNode cur = head;
+        while(cur != null){
+            while(cur.next!=null && cur.val == cur.next.val){
+                cur = cur.next;
             }
-            temp = temp.next;
+            if(pre.next == cur){
+                pre = pre.next;
+            }
+            else{
+                pre.next = cur.next;
+            }
+            cur = cur.next;
         }
-        head = deletedList.next;
+        head = dummy.next;
     }
     
 
