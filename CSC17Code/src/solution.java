@@ -14,26 +14,23 @@ class ListNode {
 		val = x;
 		next = null;
 	}
-
 }
-public class solution {
 
-	public static boolean hasCycle(ListNode head) {
+public class solution {
+    public static boolean hasCycle(ListNode head){
         HashSet <ListNode> list = new HashSet<ListNode>();
-		while(head != null){
-            // Return true if head is in List
+        while(head != null){
             if(list.contains(head)){
                 return true;
             }else{
-                // Add current ListNode to head
-                list.add(head);  
+                list.add(head);
                 head = head.next;
             }
         }
         return false;
-	}
+    }
 
-	public static void main(String args[]) {
+	public static void main(String args[]){
 		ListNode head = null;
 		ListNode tmp = null;
 		System.out.println(hasCycle(head));
