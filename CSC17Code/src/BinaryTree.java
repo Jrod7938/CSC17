@@ -14,7 +14,7 @@ public class BinaryTree {
         // if node is empty return 0
 		if(node == null) return 0;
 
-        // Calculate the depth if left and right subtree
+        // Calculate the depth of left and right subtree
         int leftDepth = maxDepth(node.left);
         int rightDepth = maxDepth(node.right);
 
@@ -33,7 +33,7 @@ public class BinaryTree {
 
         // If node1 doesn't match node 2, return false
         else if(node1 == null || node2 == null) return false;
-        else{ // if node 1 matches node 2 return true
+        else{ // Recursive: if node 1 matches node 2 return true
             return node1.key == node2.key && isMirror(node1.left, node2.right) && isMirror(node1.right, node2.left);
         }
     }
