@@ -13,10 +13,29 @@ class TreeNode {
 public class BinaryTree1 {
 
 	public static List<String> binaryTreePaths(TreeNode node) {
-        // TODO: Place your code here
+        List<String> answer = new LinkedList<>();
+        if(node==null){ return answer; }
+        depthForSearch(node, "", answer);
 
-        return null;
+        return answer;
 	}
+
+    private static void depthForSearch(TreeNode node, String path, List<String> answer) {
+        path += node.key;
+        if(isLeaf(node)){
+            answer.add(path);
+        }
+        if(node.left!=null){
+            depthForSearch(node.left, path + "->", answer);
+        }
+        if(node.right!=null){
+            depthForSearch(node.right, path + "->", answer);
+        }
+    }
+
+    private static boolean isLeaf(TreeNode node) {
+        return (node.left==null && node.right==null);
+    }
 
     public static List<Double> averageOfLevels(TreeNode node) {
         double total = 0.0;
