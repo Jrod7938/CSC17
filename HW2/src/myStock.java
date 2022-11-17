@@ -1,6 +1,7 @@
 import java.io.*;
 import java.math.*;
 import java.util.*;
+
 import yahoofinance.*;
 
 // to store the stock name and price
@@ -11,52 +12,58 @@ class stockInfo {
 		name = nameIn; price = priceIn;
 	}
 	public String toString() {return name + " " + price.toString();}
+
+	public String getName(){ return name; }
+	public BigDecimal getPrice(){ return price; }
+	public void setPrice(BigDecimal price){ this.price = price; }
 }
 
 public class myStock {
-	/* 
-	 * TODO: declare the data structures used for the database HERE.
-	 * HINT: use two data structures to store two copies of the stock information.
-	 * One for O(1) retrieval, the other is used to get top K stocks in O(K) time.
-	 * HashMap<String, stockInfo> and TreeSet<Map.Entry<String, stockInfo>> are recommended.
-	 * The entries are not sorted in HashMap, but they are sorted in TreeSet.
-	 */
+	static HashMap<String, stockInfo> map = null;
 	
 	public myStock() {
-		/* 
-		 * TODO: implement the constructor to initialize the data structures HERE.
-		 * HINT: to let the stocks be sorted by the price in a data structure 
-		 * the compare method need to be overridden. 
-		 */
-		
+		map = new HashMap<String, stockInfo>();
 	}
 
 	public void insertOrUpdate(String symbol, stockInfo stock) {
 		/* 
-		 * TODO: implement this method to insert or update the records
-		 * Make sure it can be done within O(log(n)) time.
-		 * Make sure multiple copies are inserted or updated.
+		 * implemented this method to insert or update the records
 		 */
-		
+
+		// if map contains symbol, update symbol
+		if(symbol!=null && map.containsKey(symbol)){
+			map.replace(symbol, stock);
+		}else{
+			// put symbol in map if map does not contain symbol
+			map.put(symbol, stock);
+		}
 	}
 
 	public stockInfo get(String symbol) {
 		/* 
-		 * TODO: implement this method to retrive record from database in O(1) time
+		 * implemented this method to retrive record from database in O(1) time
 		 */
-		return null;
+		return map.get(symbol);
 	}
 
 	public List<Map.Entry<String, stockInfo>> top(int k) {
 		/* 
-		 * TODO: implement this method to return the stock records with top k prices in O(k) time
-		 * HINT: use iterator to retrive items in the sorted order from a data structure
-		 * If you use TreeSet, the Iterator can be created like:
-		 * TreeSet<Map.Entry<String, stockInfo>> set = new TreeSet<Map.Entry<String, stockInfo>>;
-		 * Iterator<Map.Entry<String, stockInfo>> setIterator = set.iterator();
-		 * see more info from https://www.geeksforgeeks.org/treeset-iterator-method-in-java/
+		 * implemented this method to return the stock records with top k prices in O(k) time
 		 */
-		return null;
+		// initialized a new list with the entry set of our map
+		List<Map.Entry<String, stockInfo>> list = new LinkedList<Map.Entry<String, stockInfo>>(map.entrySet());
+
+		// sorting our map by overriding the compare meathod
+		Collections.sort(list, new Comparator<Map.Entry<String, stockInfo>>(){
+			@Override
+			// compairing bigDecimals
+			public int compare(java.util.Map.Entry<String, stockInfo> stock1, java.util.Map.Entry<String, stockInfo> stock2){
+				return (stock2.getValue().getPrice()).compareTo(stock1.getValue().getPrice());
+			}
+		});
+
+		// return the sorted list from 0 to the kth value
+		return list.subList(0, k);
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -99,6 +106,6 @@ public class myStock {
 		// test the get method
 		System.out.println("===========Stock info retrieval===========");
 		System.out.println("VMW" + " " + techStock.get("VMW"));
-		System.out.println("CHL" + " " + techStock.get("CHL"));
+		System.out.println("BIDU" + " " + techStock.get("BIDU"));
 	}
 }
