@@ -23,7 +23,43 @@ public class GraphOperation {
 		public void addEdge(int v, int w) { (adjListsMap.get(v)).add(w); }
 	}
 	public static boolean isBipartite(Graph graph) {
-		// place your code here
+		int[] color = new int[graph.V];
+		
+		for(int i = 0; i < graph.V; i++){
+
+			/*
+				1 = Blue
+				0 = Not Colored
+				-1 = Red
+				If node is not colored, 
+				add it to the queue and 
+				"color" it with the value 1
+			 */
+			if(color[i] == 0){
+				Queue<Integer> q = new LinkedList<>();
+				q.add(i);
+				color[i] = 1;
+
+				/*
+					While queue is not empty,
+					pop the head value and check their colors
+				 */
+				while(!q.isEmpty()){
+					Integer number = q.poll();
+					for(int n: graph.getNeighbors(number)){
+						/*
+							Graph is not a bipartite when two numbers that are connected have the same color
+						*/
+						if(color[n] == color[number]){ return false; }
+						// else if number is not colored, color it the opposite of the connected number
+						else if(color[n] == 0){
+							q.add(n);
+							color[n] = -color[number];
+						}
+					}
+				}
+			}
+		}
 		return true;
 	}
 
