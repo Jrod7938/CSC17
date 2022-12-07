@@ -37,6 +37,9 @@ public class GraphOperation2 {
 		}
 	}
 
+    // depth-first search to find all bridges in a graph
+    
+
 
     public static List<List<Integer>> allBridges(Graph g) {
         // Create a list to store the bridges
@@ -76,7 +79,7 @@ public class GraphOperation2 {
     
                 // Update the lowest reachable vertex for the current vertex
                 reachable[u] = Math.min(reachable[u], reachable[v]);
-    
+
                 // If the neighbor's lowest reachable vertex is higher than the current vertex,
                 // the edge between the current vertex and the neighbor is a bridge
                 if (reachable[v] > u) {
