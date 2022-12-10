@@ -51,8 +51,11 @@ public class CC {
 		int size = 1;
 		visited.put(v, id);
 		
+		// visit all unvisited neighbors of v
 		for (int w : g.adj(v)) {
+			// w is not visited yet, so it must be part of the same connected component
 			if (!visited.containsKey(w)) {
+				// recursively visit w
 				size += dfs(g, w, visited, id);
 			}
 		}
@@ -66,6 +69,7 @@ public class CC {
 	}
 
 	public List<cc> top(int k) {
+		// this is the method to return the top k connected components
 		return components.subList(0, Math.min(k, components.size()));
 	}
 }
