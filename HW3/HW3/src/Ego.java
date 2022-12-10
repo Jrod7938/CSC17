@@ -1,6 +1,9 @@
-
 import java.util.*;
+
 public class Ego {
+	// place your code here
+	private List<egonet> egoList;
+
 	// the nested class used to define a egonet
 	public static class egonet {
 		int center; // center of the egonet
@@ -20,24 +23,29 @@ public class Ego {
 		}
 	}
 
-	List<egonet> egoNetworks; // the list to store ego networks in a sorted order
-
 	public Ego(Graph g) {
-		egoNetworks = new ArrayList<>();
-		// build data structure to store ego networks
-		for (int v : g.getVertices()) {
-			// create an egonet for each vertex
-			Graph egoNet = new Graph();
-			for (int w : g.adj(v)) {
-				// add the center and its neighbors to the egonet
-				egoNet.addVertex(v);
-				egoNet.addVertex(w);
-				egoNet.addEdge(v, w);
+		// TODO: strength is still not correct, need to fix
+		egoList = new ArrayList<>();
+		Set<Integer> vertices = g.getVertices();
+		for (int v : vertices) {
+			Graph egoGraph = new Graph();
+			Set<Integer> neighbors = g.adj(v);
+			egoGraph.addVertex(v);
+			for (int n : neighbors) {
+				egoGraph.addVertex(n);
+				egoGraph.addEdge(v, n);
+				Set<Integer> nNeighbors = g.adj(n);
+				for (int nn : nNeighbors) {
+					if (neighbors.contains(nn)) {
+						egoGraph.addVertex(nn);
+						egoGraph.addEdge(n, nn);
+					}
+				}
 			}
-			egoNetworks.add(new egonet(v, egoNet));
+			egoList.add(new egonet(v, egoGraph));
 		}
-		// sort ego networks based on their powers (number of edges)
-		Collections.sort(egoNetworks, new Comparator<egonet>() {
+		// sort egoList in descending order based on the number of edges in the ego graph
+		Collections.sort(egoList, new Comparator<egonet>() {
 			public int compare(egonet e1, egonet e2) {
 				return e2.getG().getE() - e1.getG().getE();
 			}
@@ -45,7 +53,12 @@ public class Ego {
 	}
 
 	public List<egonet> top(int k) {
-		// return the top k ego networks
-		return egoNetworks.subList(0, k);
+		// this is the method to return the top k ego networks with the largest number of edges. The nested class egonet is provided to define an ego network.
+		List<egonet> topK = new ArrayList<>();
+		for (int i = 0; i < k && i < egoList.size(); i++) {
+			topK.add(egoList.get(i));
+		}
+		return topK;
 	}
+
 }
