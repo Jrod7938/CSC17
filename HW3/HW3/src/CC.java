@@ -22,7 +22,7 @@ public class CC {
 	private List<cc> components;
 	
 	public CC(Graph g) {
-		// this is the constructor to build the data structure that stores all connected components that represent the communities from graph g in a sorted order based on the size  (i.e., the number of nodes). Here, we only need to store the id and the size of each connected component.
+		// this is the constructor to build the data structure that stores all connected components
 		
 		components = new ArrayList<>();
 		Map<Integer, Integer> visited = new HashMap<>(); // map of visited vertices
@@ -66,7 +66,6 @@ public class CC {
 	}
 
 	public List<cc> top(int k) {
-		// this is the method to return the k biggest communities, the nested class cc is provided to represent a community, which contains the id of the community and its size.
 		return components.subList(0, Math.min(k, components.size()));
 	}
 }
