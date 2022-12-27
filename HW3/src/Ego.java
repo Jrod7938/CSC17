@@ -43,6 +43,9 @@ public class Ego {
 				// add the edge between the current vertex and its neighbor to the egonet graph
 				egonetGraph.addEdge(v, neighbor);
 
+				// add the edge from neighbor to v to the egonet graph
+				egonetGraph.addEdge(neighbor, v);
+
 				// get the neighbors of the current neighbor
 				Set<Integer> neighborNeighbors = g.adj(neighbor);
 
